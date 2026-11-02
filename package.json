@@ -94,6 +94,9 @@
     "url": "git+https://github.com/nrosier/balancr.git"
   },
   "overrides": {
+    "@actual-app/core": {
+      "handlebars": ">=4.7.10"
+    },
     "esbuild": ">=0.28.2",
     "protobufjs@<=8.7.2": "8.8.0"
   },
