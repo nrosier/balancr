@@ -58,8 +58,7 @@ otherwise.
 
 ## CI's own layers (don't re-propose these, check they're not being bypassed)
 
-`gitleaks` (full history, every push/PR), the Semgrep GitHub App (policy decision
-lives on semgrep.dev, mirrored into code-scanning alerts), Trivy on the built image
+`gitleaks` (full history, every push/PR), Trivy on the built image
 (`image.yml`, CRITICAL/HIGH, actually gates merge), `scripts/verify-image.sh`
 (container hardening: non-root UID 1000, read-only rootfs, all capabilities
 dropped). See `docs/ci.md`.
