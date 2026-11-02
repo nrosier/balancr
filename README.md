@@ -1022,17 +1022,15 @@ ends.
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.5.5` is the current release. It's a
-dependency-and-security patch: `handlebars` is pinned to `4.7.10` through
-`@actual-app/core` to close three advisories, `@actual-app/api` and
-`@actual-app/core` move to `26.11.0`, the production base image takes the
-current Chainguard `node` digest, and routine bumps (`nodemailer`, `fastify`,
-`vite`, `@google/genai`, dev tooling) and a lockfile refresh land alongside
-— no user-facing behavior change (see [`CHANGELOG.md`](CHANGELOG.md) for
-details). Existing deployments upgrade in place.
+**Where it is now** — `2.5.6` is the current release. It's a
+release-pipeline patch with no user-facing behavior change: the release image
+is now published to GitHub Container Registry (`ghcr.io/nrosier/balancr`)
+instead of Docker Hub, and the `release.yml` push authenticates with the job's
+`GITHUB_TOKEN` (see [`CHANGELOG.md`](CHANGELOG.md) for details). Existing
+deployments upgrade in place.
 
-`docker pull` now resolves `latest` to `2.5.5`; a release candidate is
-published under its own tag only, same as before.
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.5.6`; a release
+candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped
 by milestone. [`CHANGELOG.md`](CHANGELOG.md) records what each version changed and

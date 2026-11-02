@@ -6,6 +6,14 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.5.6] — 2026-11-02
+
+Release-pipeline change — no user-facing behavior change.
+
+### Changed
+
+- **The release image is published to GitHub Container Registry (`ghcr.io/nrosier/balancr`) instead of Docker Hub** ([#839](https://github.com/nrosier/balancr/pull/839), [#838](https://github.com/nrosier/balancr/issues/838)). `release.yml` now logs in with the job's `GITHUB_TOKEN` (`packages: write`), so the `DOCKERHUB_NAME` and `DOCKERHUB_TOKEN` secrets are no longer used for the push, and Docker Hub is no longer updated by this pipeline. `compose.yaml` and the docs point at the new image name.
+
 ## [2.5.5] — 2026-11-02
 
 Dependency and base-image maintenance — no user-facing behavior change.
