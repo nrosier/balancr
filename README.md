@@ -1022,16 +1022,16 @@ ends.
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.5.4` is the current release. It's a
-dependency-maintenance patch: the production base image moves to the current
-Chainguard `node` digest, closing a HIGH-severity Trivy finding in Wolfi's
-bundled `npm` package, alongside routine bumps (`@actual-app/api` and
-`@actual-app/core` to `26.10.0`, `@google/genai`, `nodemailer`,
-`@fastify/static`, dev tooling) and a lockfile refresh — no user-facing
-behavior change (see [`CHANGELOG.md`](CHANGELOG.md) for details). Existing
-deployments upgrade in place.
+**Where it is now** — `2.5.5` is the current release. It's a
+dependency-and-security patch: `handlebars` is pinned to `4.7.10` through
+`@actual-app/core` to close three advisories, `@actual-app/api` and
+`@actual-app/core` move to `26.11.0`, the production base image takes the
+current Chainguard `node` digest, and routine bumps (`nodemailer`, `fastify`,
+`vite`, `@google/genai`, dev tooling) and a lockfile refresh land alongside
+— no user-facing behavior change (see [`CHANGELOG.md`](CHANGELOG.md) for
+details). Existing deployments upgrade in place.
 
-`docker pull` now resolves `latest` to `2.5.4`; a release candidate is
+`docker pull` now resolves `latest` to `2.5.5`; a release candidate is
 published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped

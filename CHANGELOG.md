@@ -6,6 +6,23 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.5.5] — 2026-11-02
+
+Dependency and base-image maintenance — no user-facing behavior change.
+
+### Security
+
+- **`handlebars`, pulled in only through `@actual-app/core`, carried three advisories (GHSA-8r5x-fm3f-whwj, CVE-2026-106445, CVE-2026-106446) in the affected range `3.0.0`–`4.7.9`**
+  ([#831](https://github.com/nrosier/balancr/pull/831)). It is now pinned to `4.7.10` with an override scoped to `@actual-app/core`, its only dependent, so the audit no longer flags it.
+- **Routine security-advisory bumps**: `nodemailer` ([#810](https://github.com/nrosier/balancr/pull/810), [#814](https://github.com/nrosier/balancr/pull/814)), `fastify` ([#813](https://github.com/nrosier/balancr/pull/813), [#835](https://github.com/nrosier/balancr/pull/835)), and `vite` ([#812](https://github.com/nrosier/balancr/pull/812)).
+- **The production image's Chainguard `node` runtime digest moves to the current build** ([#806](https://github.com/nrosier/balancr/pull/806)), and the dev-stage digest used only to build moves with it ([#807](https://github.com/nrosier/balancr/pull/807), [#833](https://github.com/nrosier/balancr/pull/833)).
+
+### Changed
+
+- **`@actual-app/api` and `@actual-app/core` both move to `26.11.0`** ([#826](https://github.com/nrosier/balancr/pull/826), [#827](https://github.com/nrosier/balancr/pull/827)). The manually pinned `EXPECTED_API_VERSION` guard in `src/adapters/actual/protocol.ts` moves with it.
+- **The declared Node engine moves to `>=26.13.0`**, matching `.nvmrc` and the Node 26 pins ([#825](https://github.com/nrosier/balancr/pull/825), [#830](https://github.com/nrosier/balancr/pull/830)).
+- **Routine dependency maintenance**: `@google/genai` ([#809](https://github.com/nrosier/balancr/pull/809)), `@fastify/cookie`, `@fastify/helmet`, `@fastify/rate-limit`, `@fastify/static` ([#818](https://github.com/nrosier/balancr/pull/818), [#819](https://github.com/nrosier/balancr/pull/819), [#820](https://github.com/nrosier/balancr/pull/820), [#828](https://github.com/nrosier/balancr/pull/828)), `drizzle-orm` ([#821](https://github.com/nrosier/balancr/pull/821)), `openid-client` ([#822](https://github.com/nrosier/balancr/pull/822)), `pino` ([#823](https://github.com/nrosier/balancr/pull/823)), `i18next` ([#829](https://github.com/nrosier/balancr/pull/829)), `otpauth` ([#836](https://github.com/nrosier/balancr/pull/836)), dev dependencies ([#808](https://github.com/nrosier/balancr/pull/808), [#834](https://github.com/nrosier/balancr/pull/834)), and a lock-file maintenance pass ([#811](https://github.com/nrosier/balancr/pull/811), [#837](https://github.com/nrosier/balancr/pull/837)), each verified by CI before merging.
+
 ## [2.5.4] — 2026-10-02
 
 Dependency and base-image maintenance — no user-facing behavior change.
