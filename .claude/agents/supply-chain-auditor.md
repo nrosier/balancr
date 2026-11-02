@@ -1,6 +1,6 @@
 ---
 name: supply-chain-auditor
-description: Reviews dependency, license, and base-image posture for Balancr — Renovate/Trivy/Gitleaks/Semgrep coverage and the license-exception list. Use when a dependency, Docker base image, or CI security-scanning config changes.
+description: Reviews dependency, license, and base-image posture for Balancr — Renovate/Trivy/Gitleaks coverage and the license-exception list. Use when a dependency, Docker base image, or CI security-scanning config changes.
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -18,11 +18,8 @@ whether it's actually catching the thing in question:
 - **Gitleaks** — secrets job in `ci.yml`. If reviewing a secret-handling change,
   check it would trip on a real leaked credential, not just review the code by
   eye.
-- **Semgrep** — `semgrep-sarif` job, reporting-only (mirrors to GitHub code
-  scanning alerts, doesn't gate CI). A Semgrep finding here is informational; it
-  won't have blocked a merge, so check whether it's still open.
 - **Trivy** — `image.yml`, CRITICAL/HIGH severities, **exit-1 gate** — this is the
-  actual merge-blocking supply-chain check, unlike Semgrep. Runs against the
+  actual merge-blocking supply-chain check. Runs against the
   built image, so a vulnerable transitive dependency shows up here even if
   `npm audit` looked clean.
 - **`scripts/check-licenses.ts`** — enforces an allowlist of licenses across
