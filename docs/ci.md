@@ -23,21 +23,6 @@ removed is still in history, and that is exactly the case this exists to
 catch. Run as the plain Docker image rather than a marketplace action: no
 licence key, and the same command works on a laptop.
 
-**`semgrep-sarif` (Semgrep findings).** Reporting only — it does not gate
-anything. The actual scan and the actual policy decision are the Semgrep
-GitHub App (`semgrep-cloud-platform/scan`, configured on
-[semgrep.dev](https://semgrep.dev), not in this repo). That check runs on
-every PR on its own, with no workflow file here to maintain — but its
-dashboard has no API this repo can reach: no PR comments, no check
-annotations, a login-gated scan page. This job re-runs `semgrep ci --sarif`
-(using the `SEMGREP_APP_TOKEN` secret, so it applies the same rules/policy as
-the App) purely so the findings land in GitHub's own code-scanning alerts,
-which *are* queryable (`gh api repos/<owner>/<repo>/code-scanning/alerts`) —
-triaged into an issue, or dismissed as a false positive, the same way any
-other finding in this repo is handled. `|| true` on the scan step: a real
-finding here must never fail the build, since the App's check is what
-already decided that.
-
 ### `image.yml` — pull request, only on paths that can change the image
 
 Not run on every PR. On a source-only change it re-verifies almost nothing —
@@ -88,8 +73,10 @@ check (catching a CVE disclosed after an image already shipped), not the
 release gate; `image.yml`'s Trivy step is that gate, and runs at PR time
 regardless of Harbor's own schedule.
 
-**Semgrep.** The GitHub App on this repo, not a workflow — see `semgrep-sarif`
-above for how its findings become visible here anyway.
+**Semgrep.** The GitHub App on this repo (`semgrep-cloud-platform/scan`,
+configured on [semgrep.dev](https://semgrep.dev)), not a workflow. CI no
+longer runs Semgrep or uploads its findings to code-scanning alerts; the App's
+check is the only Semgrep signal on a PR.
 
 **Dependabot / Renovate.** Native Dependabot security *updates* are disabled
 (`security_and_analysis.dependabot_security_updates`) in favour of Renovate's
