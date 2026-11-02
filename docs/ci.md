@@ -54,8 +54,9 @@ always builds the image before it merges.
 
 ### `release.yml` — every push to `main`, every `v*` tag
 
-Builds and pushes the image to Docker Hub. `edge` on every push to `main`;
-semver tags, `latest` (excluding release candidates), and a short-sha tag on
+Builds and pushes the image to GitHub Container Registry
+(`ghcr.io/nrosier/balancr`), authenticated with `GITHUB_TOKEN`. `edge` on every
+push to `main`; semver tags, `latest` (excluding release candidates), and a short-sha tag on
 a version tag. No scanning here — that already happened in `image.yml` (for
 the PR that produced this commit) or is about to happen via Harbor's own
 scan-on-push (below); duplicating either in the one workflow that must not
@@ -64,7 +65,7 @@ fail partway through a publish would only add a way for a release to hang.
 ## Outside this repo
 
 **Harbor.** The operator's own Harbor instance replicates the published
-Docker Hub image on a nightly schedule and scans on push
+image on a nightly schedule and scans on push
 (`docs/security-model.md`-adjacent, homelab-side config, not tracked here).
 Both are Harbor-initiated — nothing calls into Harbor from CI — which is what
 keeps this off-limits to the Cloudflare-blocked-webhook problem #395 hit with

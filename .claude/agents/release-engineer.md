@@ -54,7 +54,7 @@ Commit message: `release: vX.Y.Z — <short, evocative, lowercase summary>`, bod
 ## The tag is the actual release gesture
 
 `git tag vX.Y.Z && git push --tags` (per `release.yml`'s own comment) is what
-triggers the Docker image build/publish to `docker.io/niqck/balancr`
+triggers the Docker image build/publish to `ghcr.io/nrosier/balancr`
 (semver + `edge` + short-sha tags; `latest` only for non-`-rc` tags). Two separate
 "Release" workflow runs fire for one release — one from the `main` push, one from
 the tag push — check both with

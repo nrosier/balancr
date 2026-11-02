@@ -56,7 +56,7 @@ issue's fix — documenting the assumption, not changing the code).
 
 ## The production Compose file defaults to a mutable image tag
 
-**Decision:** `compose.yaml`'s `${BALANCR_IMAGE:-niqck/balancr:latest}`
+**Decision:** `compose.yaml`'s `${BALANCR_IMAGE:-ghcr.io/nrosier/balancr:latest}`
 default tracks the newest non-RC release rather than a pinned digest. This is
 an example file for a self-hosted installer, not a supply-chain-controlled
 deployment pipeline — pinning is the installer's call to make for their own

@@ -51,7 +51,7 @@ whether it's actually catching the thing in question:
    Any known-CVE version pinned in `package.json`'s range that Renovate would
    have already bumped past?
 2. Base image bump (`Dockerfile`): still on the Wolfi/Chainguard-derived image
-   (`niqck/balancr` on Docker Hub, glibc, UID 1000, read-only rootfs — see
+   (`ghcr.io/nrosier/balancr`, glibc, UID 1000, read-only rootfs — see
    `docs/security-model.md`'s container hardening section)? A switch away from
    this needs to be deliberate, not a side effect of chasing a version bump.
 3. `Dockerfile`/`compose.yaml` changes: run `hadolint` locally
