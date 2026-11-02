@@ -73,11 +73,6 @@ check (catching a CVE disclosed after an image already shipped), not the
 release gate; `image.yml`'s Trivy step is that gate, and runs at PR time
 regardless of Harbor's own schedule.
 
-**Semgrep.** The GitHub App on this repo (`semgrep-cloud-platform/scan`,
-configured on [semgrep.dev](https://semgrep.dev)), not a workflow. CI no
-longer runs Semgrep or uploads its findings to code-scanning alerts; the App's
-check is the only Semgrep signal on a PR.
-
 **Dependabot / Renovate.** Native Dependabot security *updates* are disabled
 (`security_and_analysis.dependabot_security_updates`) in favour of Renovate's
 own `vulnerabilityAlerts`, which reacts to the same GitHub Advisory data but
