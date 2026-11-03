@@ -379,3 +379,9 @@ export async function getSchedules(): Promise<unknown[]> {
 export async function getRules(): Promise<unknown[]> {
   return dataset.rules
 }
+
+/** The generated dataset carries no `#tag` notes, so there are no tags to register (#663). Without this the
+ *  sync job's `fetchTags` call fails and the fake backend never produces any facts. */
+export async function getTags(): Promise<unknown[]> {
+  return []
+}

@@ -57,6 +57,20 @@ system.
 3. Is every new string routed through `t()` with keys added to *both*
    `src/i18n/locales/en/*.json` and `src/i18n/locales/nl/*.json`?
 
+## The written standard and the rendered evidence
+
+`docs/ui/UI-UX_GUIDELINES.md` is the normative guide (ported from Astraya's generic
+core); cite its section numbers. When the caller passes screenshots or the JSON from
+`scripts/audit-ui.mjs` (see the `ui-ux-spec-review` skill), read them — `Read` renders
+PNGs — and judge what was actually rendered, not only what the source suggests:
+alignment, hierarchy, whether the primary action is in the first screenful at
+1280×800, and whether light and dark both hold up.
+
+4. Does a destructive action (`remove`, `revoke`, `DELETE`) confirm or offer undo,
+   and look different from a neutral secondary action (guidelines §13)?
+5. Does every interactive element reach 44×44 on a coarse pointer (§6), and do
+   spacing, radius and colour come from `web/src/theme/tokens.css` (§11)?
+
 ## Output format
 
 `path:line`, what convention it breaks or matches, and — if proposing a change —

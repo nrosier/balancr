@@ -27,6 +27,7 @@
     "badges:check": "node scripts/check-badges.mjs",
     "changelog:check": "tsx scripts/check-changelog.ts",
     "contrast:check": "tsx scripts/check-contrast.ts",
+    "ui:audit": "node scripts/audit-ui.mjs",
     "skips:check": "tsx scripts/check-test-skips.ts",
     "licenses:check": "tsx scripts/check-licenses.ts",
     "allow-scripts:check": "tsx scripts/check-allow-scripts.ts",
@@ -63,6 +64,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/inter": "^5.3.0",
+    "@playwright/test": "^1.64.1",
     "@testing-library/react": "^16.3.3",
     "@types/better-sqlite3": "^9.6.0",
     "@types/license-checker": "^25.0.6",
