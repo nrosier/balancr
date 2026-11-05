@@ -25,7 +25,7 @@
 #
 # Usable by hand, which is the point of it being a script rather than workflow YAML:
 #
-#   docker build -t balancr:test . && scripts/verify-image.sh balancr:test
+#   docker build --build-arg GIT_REVISION="$(git rev-parse HEAD 2>/dev/null || echo unknown)" -t balancr:test . && scripts/verify-image.sh balancr:test
 set -euo pipefail
 
 IMAGE=${1:?usage: verify-image.sh <image>}

@@ -24,7 +24,7 @@ in the job summary, so a change that doubles either is something a reviewer
 walks past rather than has to go looking for. By hand:
 
 ```sh
-docker build -t balancr:test . && scripts/verify-image.sh balancr:test
+docker build --build-arg GIT_REVISION="$(git rev-parse HEAD 2>/dev/null || echo unknown)" -t balancr:test . && scripts/verify-image.sh balancr:test
 ```
 
 ## Egress

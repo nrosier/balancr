@@ -81,6 +81,15 @@ EXPOSE 3000
 ARG BALANCR_REVISION=""
 ENV BALANCR_REVISION=${BALANCR_REVISION}
 
+# OCI revision label: the commit this image was built from, so registries and
+# tooling (`docker inspect`, `docker buildx imagetools inspect`) can read it
+# without running the container. A separate ARG from BALANCR_REVISION on purpose:
+# that one defaults to empty (the app reads empty as "no revision"), while a label
+# must never be absent or empty, so a plain `docker build .` falls back to "unknown".
+# CI passes the real SHA; locally: --build-arg GIT_REVISION=$(git rev-parse HEAD).
+ARG GIT_REVISION=unknown
+LABEL org.opencontainers.image.revision=$GIT_REVISION
+
 # Exec form, not shell form: this image has no /bin/sh to interpret a shell-form CMD.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD ["/usr/bin/node", "-e", "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]

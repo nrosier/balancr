@@ -78,8 +78,18 @@ jobs:
           push: false
           load: true
           tags: balancr:ci
+          build-args: |
+            GIT_REVISION=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      # The OCI revision label must be present and be the commit being built.
+      - name: Check the revision label
+        run: |
+          rev="$(docker inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' balancr:ci)"
+          if [ "$rev" != "${{ github.sha }}" ]; then
+            echo "::error::org.opencontainers.image.revision is '$rev', expected ${{ github.sha }}"
+            exit 1
+          fi
       # A built image is not a working one. This starts it with the same flags
       # compose uses and checks the hardening is real rather than declared —
       # non-root, an unwritable /app, no capabilities, a healthcheck that works —

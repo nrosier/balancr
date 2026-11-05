@@ -74,6 +74,15 @@ EXPOSE 3000
 ARG BALANCR_REVISION=""
 ENV BALANCR_REVISION=${BALANCR_REVISION}
 
+# OCI revision label: the commit this image was built from, so registries and
+# tooling (`docker inspect`, `docker buildx imagetools inspect`) can read it
+# without running the container. A separate ARG from BALANCR_REVISION on purpose:
+# that one defaults to empty (the app reads empty as "no revision"), while a label
+# must never be absent or empty, so a plain `docker build .` falls back to "unknown".
+# CI passes the real SHA; locally: --build-arg GIT_REVISION=$(git rev-parse HEAD).
+ARG GIT_REVISION=unknown
+LABEL org.opencontainers.image.revision=$GIT_REVISION
+
 # Liveness, not readiness. `/healthz` touches nothing, so it answers while Actual is
 # unreachable and while a job is failing — which is the point: Docker restarts an
 # unhealthy container, and restarting Balancr because Ghostfolio is down turns one
