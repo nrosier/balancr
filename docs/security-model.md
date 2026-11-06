@@ -27,6 +27,41 @@ walks past rather than has to go looking for. By hand:
 docker build --build-arg GIT_REVISION="$(git rev-parse HEAD 2>/dev/null || echo unknown)" -t balancr:test . && scripts/verify-image.sh balancr:test
 ```
 
+## Image signatures
+
+Every image that `release.yml` publishes to `ghcr.io/nrosier/balancr` is signed
+with Cosign keyless signing: the release job's GitHub OIDC token is exchanged
+for a short-lived Fulcio certificate naming the workflow, and the signing event
+is recorded in the Sigstore Rekor transparency log. There is no key to leak or
+rotate. The signature is made over the image digest, so one signature covers
+every tag that points at it (`edge`, `sha-*`, `X.Y.Z`, `X.Y`, `latest`). The
+release job verifies the signature right after writing it.
+
+To check an image came from this repository's release workflow, pin the exact
+workflow path and release tag:
+
+```sh
+cosign verify \
+  --certificate-identity="https://github.com/nrosier/balancr/.github/workflows/release.yml@refs/tags/vX.Y.Z" \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  ghcr.io/nrosier/balancr:X.Y.Z
+```
+
+`edge` and `sha-*` images are built from `main`, so their identity ends in
+`@refs/heads/main` instead. To accept those, or any release of this repository,
+use the looser regexp form:
+
+```sh
+cosign verify \
+  --certificate-identity-regexp="^https://github.com/nrosier/balancr/\.github/workflows/release\.yml@refs/(tags/v.+|heads/main)$" \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  ghcr.io/nrosier/balancr:edge
+```
+
+Signatures are stored in the registry as `sha256-<hash>.sig` tags next to the
+image. Any registry cleanup or retention policy must keep them: deleting one
+makes that image unverifiable.
+
 ## Egress
 
 Balancr refuses to connect to a host nobody configured. The allowlist is
