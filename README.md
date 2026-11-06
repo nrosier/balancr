@@ -965,6 +965,22 @@ the egress guard and its trust boundaries, and how the `.env` file is protected.
 See [`docs/ci.md`](docs/ci.md) for every automated check that enforces it —
 secret scanning, dependency licenses, image scanning, and where each one runs.
 
+### Verifying the image
+
+Published images are signed with Cosign (keyless), so you can prove one was built
+by this repository's release workflow:
+
+```sh
+cosign verify \
+  --certificate-identity="https://github.com/nrosier/balancr/.github/workflows/release.yml@refs/tags/vX.Y.Z" \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  ghcr.io/nrosier/balancr:X.Y.Z
+```
+
+`edge` and `sha-*` images use an identity ending in `@refs/heads/main`; see
+[`docs/security-model.md`](docs/security-model.md#image-signatures) for that form
+and for the rule that `sha256-<hash>.sig` tags must survive registry cleanup.
+
 ## Architecture
 
 One container, modular inside: a Fastify API and cron pipeline in the main
