@@ -1019,17 +1019,18 @@ ends.
 | `2.3.0` | Prompt safety gate and lock for the editable narrative prompt; non-mortgage debt tracking | ✅ |
 | `2.4.0` | Security: egress guard scoped per tenant (Ghostfolio and Actual alike), stored-secret host binding, retention completeness | ✅ |
 | `2.5.0` | Monthly digest as a downloadable PDF or an emailed one; second full-codebase-review batch closed (egress, auth, transactional, and privacy hardening) | ✅ |
+| `2.6.0` | Build provenance (OCI revision label on every image) and UI/UX audit tooling | ✅ |
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.5.6` is the current release. It's a
-release-pipeline patch with no user-facing behavior change: the release image
-is now published to GitHub Container Registry (`ghcr.io/nrosier/balancr`)
-instead of Docker Hub, and the `release.yml` push authenticates with the job's
-`GITHUB_TOKEN` (see [`CHANGELOG.md`](CHANGELOG.md) for details). Existing
-deployments upgrade in place.
+**Where it is now** — `2.6.0` is the current release. It adds
+build provenance and review tooling with no user-facing behavior change: every
+image now carries an `org.opencontainers.image.revision` label matching its
+source commit, and a UI/UX audit workflow (`npm run ui:audit`, guidelines and a
+first full audit) lands under `docs/ui/` (see [`CHANGELOG.md`](CHANGELOG.md) for
+details). Existing deployments upgrade in place.
 
-`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.5.6`; a release
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.6.0`; a release
 candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped

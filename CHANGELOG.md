@@ -6,6 +6,19 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.6.0] — 2026-11-06
+
+Build provenance and UI/UX review tooling — no user-facing behavior change.
+
+### Added
+
+- **Every image build now carries an `org.opencontainers.image.revision` label set to the commit it was built from.** Both Dockerfiles take a `GIT_REVISION` build argument (default `unknown`), CI passes the commit SHA, and `image.yml` asserts the built label equals that SHA, so a published image can be traced back to its source commit.
+- **A UI/UX review workflow.** `npm run ui:audit` captures every route at phone, desktop and ultrawide sizes in both themes and checks contrast, touch targets, accessible names, overflow, spacing, focus indicators, console errors and heading structure. It ships with a project-agnostic UI/UX guidelines document, a review skill and agent, a Playwright MCP server entry, and a first full audit of the UI (`docs/ui/`).
+
+### Fixed
+
+- **The fake Actual backend used for local development lacked `getTags`, so the sync job failed and the fake backend never produced data.** It now implements it.
+
 ## [2.5.6] — 2026-11-02
 
 Release-pipeline change — no user-facing behavior change.
