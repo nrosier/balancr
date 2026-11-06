@@ -45,7 +45,7 @@
     "@fastify/rate-limit": "^11.2.2",
     "@fastify/static": "^10.1.10",
     "@google/genai": "^2.32.0",
-    "argon2": "^0.45.1",
+    "argon2": "^0.45.2",
     "better-sqlite3": "^13.0.3",
     "drizzle-orm": "^0.45.4",
     "echarts": "^6.1.0",
