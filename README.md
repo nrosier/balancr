@@ -1037,18 +1037,17 @@ ends.
 | `2.4.0` | Security: egress guard scoped per tenant (Ghostfolio and Actual alike), stored-secret host binding, retention completeness | ✅ |
 | `2.5.0` | Monthly digest as a downloadable PDF or an emailed one; second full-codebase-review batch closed (egress, auth, transactional, and privacy hardening) | ✅ |
 | `2.6.0` | Build provenance (OCI revision label on every image) and UI/UX audit tooling | ✅ |
+| `2.7.0` | Dependency refresh (`@google/genai` v3, `argon2` 0.45) and corrected image-verification docs | ✅ |
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.6.1` is the current release. It's a
-release-pipeline patch with no user-facing behavior change: published images
-are now signed with Cosign (keyless) and the signature is verified in the
-release job, with verification instructions in the README and
-[`docs/security-model.md`](docs/security-model.md#image-signatures) (see
-[`CHANGELOG.md`](CHANGELOG.md) for details). Existing deployments upgrade in
-place.
+**Where it is now** — `2.7.0` is the current release. It's a
+dependency refresh with no user-facing behavior change: `@google/genai` moves to
+v3, `argon2` to 0.45, and the Cosign verification instructions are corrected
+(see [`CHANGELOG.md`](CHANGELOG.md) for details). Existing deployments upgrade
+in place.
 
-`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.6.1`; a release
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.0`; a release
 candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped

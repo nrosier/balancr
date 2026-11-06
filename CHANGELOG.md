@@ -6,6 +6,18 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.0] — 2026-11-06
+
+Dependency refresh and documentation fixes — no user-facing behavior change.
+
+### Changed
+
+- **Runtime dependencies moved to newer majors and minors.** `@google/genai` is now on v3, `argon2` on 0.45.x (its install script is explicitly allowed), and `@fastify/rate-limit`, `@fastify/static` and `i18next` take their latest patch releases. The lockfile was refreshed, and dev tooling (`jsdom` 31 and other dev dependencies) was updated.
+
+### Fixed
+
+- **The Cosign verification instructions were corrected after checking them against the first signed image.** Signatures are Sigstore bundles stored as OCI referrers, cosign 2.x needs `--new-bundle-format` to see them, and images before `2.6.1` are unsigned. The README and `docs/security-model.md` now say so (#850).
+
 ## [2.6.1] — 2026-11-06
 
 Release-pipeline change — no user-facing behavior change.
