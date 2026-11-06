@@ -6,6 +6,14 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.6.1] — 2026-11-06
+
+Release-pipeline change — no user-facing behavior change.
+
+### Added
+
+- **Published Docker images are now signed with Cosign (keyless).** The `release.yml` image job signs the image digest using its GitHub OIDC identity, recorded in the Sigstore Rekor transparency log, and verifies the signature straight after writing it, so a failed signature fails the release. One signature covers every tag pointing at the digest. The README and `docs/security-model.md` document how to verify an image and note that `sha256-<hash>.sig` tags must survive registry cleanup (#850, #851).
+
 ## [2.6.0] — 2026-11-06
 
 Build provenance and UI/UX review tooling — no user-facing behavior change.
