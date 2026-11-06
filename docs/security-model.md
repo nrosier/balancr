@@ -58,9 +58,19 @@ cosign verify \
   ghcr.io/nrosier/balancr:edge
 ```
 
-Signatures are stored in the registry as `sha256-<hash>.sig` tags next to the
-image. Any registry cleanup or retention policy must keep them: deleting one
-makes that image unverifiable.
+Signing uses cosign 3.x, which writes the signature as a Sigstore bundle
+attached to the image as an OCI referrer. Verify with cosign 3.x; cosign 2.x
+finds nothing unless you add `--new-bundle-format` (checked with 2.6.1). Only
+images published from `2.6.1` on are signed, so older tags such as `2.6.0`
+report `no signatures found`. `edge` is signed from the first `main` build that
+contained the signing step.
+
+The signature is stored in the registry next to the image: GHCR lists it as a
+`sha256-<hash>` tag (the referrers fallback index), and older cosign versions
+wrote it as `sha256-<hash>.sig`. `cosign tree` shows it. Any registry cleanup or
+retention policy must keep both the `sha256-<hash>` and `sha256-<hash>.sig`
+tags, and the manifests they point to: deleting one makes that image
+unverifiable.
 
 ## Egress
 
