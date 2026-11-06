@@ -979,7 +979,8 @@ cosign verify \
 
 `edge` and `sha-*` images use an identity ending in `@refs/heads/main`; see
 [`docs/security-model.md`](docs/security-model.md#image-signatures) for that form
-and for the rule that `sha256-<hash>.sig` tags must survive registry cleanup.
+and for the rule that the `sha256-<hash>` and `sha256-<hash>.sig` signature tags
+must survive registry cleanup. Use cosign 3.x; images before `2.6.1` are unsigned.
 
 ## Architecture
 
