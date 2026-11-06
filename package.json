@@ -43,7 +43,7 @@
     "@fastify/cookie": "^11.1.5",
     "@fastify/helmet": "^13.2.0",
     "@fastify/rate-limit": "^11.2.1",
-    "@fastify/static": "^10.1.8",
+    "@fastify/static": "^10.1.10",
     "@google/genai": "^2.32.0",
     "argon2": "^0.45.1",
     "better-sqlite3": "^13.0.3",
