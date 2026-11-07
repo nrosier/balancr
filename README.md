@@ -1041,13 +1041,13 @@ ends.
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.7.0` is the current release. It's a
-dependency refresh with no user-facing behavior change: `@google/genai` moves to
-v3, `argon2` to 0.45, and the Cosign verification instructions are corrected
-(see [`CHANGELOG.md`](CHANGELOG.md) for details). Existing deployments upgrade
-in place.
+**Where it is now** — `2.7.1` is the current release. It adds a
+multi-engine security-scanning workflow (Syft, Grype and Trivy reporting to
+GitHub Code Scanning) and the matching documentation, with no runtime or
+user-facing application change (see [`CHANGELOG.md`](CHANGELOG.md) for
+details). Existing deployments upgrade in place.
 
-`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.0`; a release
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.1`; a release
 candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped

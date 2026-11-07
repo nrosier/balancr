@@ -6,6 +6,19 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.1] — 2026-11-07
+
+Security-scanning workflow and documentation — no runtime or user-facing application change.
+
+### Added
+
+- **Multi-engine security scanning, reporting to GitHub Code Scanning.** A new `security-scan.yml` workflow builds a CycloneDX SBOM with Syft, scans it with Grype, and runs Trivy over the repository for vulnerabilities, secrets and Dockerfile/IaC misconfiguration. Results are uploaded as SARIF under the categories `grype-engine` and `trivy-engine`. It runs on pushes to `main`, pull requests, weekly and on demand; it never fails on a finding and is not a merge gate. A scheduled run with High/Critical findings opens or updates a single `security`-labelled issue. The existing Trivy image gate, gitleaks and `npm audit` are unchanged (#854, #855).
+
+### Changed
+
+- **Renovate keeps the scanner CLI pins current.** A custom regex manager in `renovate.json` reads the `# renovate:` comment above each Syft, Grype and Trivy version pin in the workflow files (#854, #855).
+- **Docs describe the scanning layers.** `docs/ci.md` documents the new workflow and who owns which check, and `docs/security-model.md` gains a "Vulnerability scanning" section (#854, #855).
+
 ## [2.7.0] — 2026-11-06
 
 Dependency refresh and documentation fixes — no user-facing behavior change.
