@@ -33,6 +33,14 @@
         "(?<depName>[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?/[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?):(?<currentValue>[\\w][\\w.-]*)@sha256:(?<currentDigest>[a-f0-9]{64})"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Syft, Grype and Trivy CLI versions (#854) are passed as `with:` inputs (`syft-version`, `grype-version`, `version`) of their actions, which the built-in github-actions manager does not read. Annotate the line above the input with `# renovate: datasource=github-releases depName=owner/repo` and this picks up the value on the next line.",
+      "fileMatch": ["^\\.github/workflows/.*\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>[^\\s]+)\\n\\s*[\\w-]+: (?<currentValue>v?[\\w.-]+)"
+      ]
     }
   ],
   "packageRules": [

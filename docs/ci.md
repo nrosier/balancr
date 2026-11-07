@@ -62,6 +62,54 @@ the PR that produced this commit) or is about to happen via Harbor's own
 scan-on-push (below); duplicating either in the one workflow that must not
 fail partway through a publish would only add a way for a release to hang.
 
+### `security-scan.yml` — push to `main`, pull request, weekly, manual
+
+Reporting, not a gate. Runs Syft, Grype and Trivy and publishes the results to
+GitHub Code Scanning (#854). Both scanners are non-failing on findings
+(`fail-build: false`, `exit-code: 0`), so a finding never turns the run red.
+
+1. **SBOM** — `anchore/sbom-action` (Syft) writes a CycloneDX SBOM,
+   `sbom.cyclonedx.json`, kept as the `sbom` artifact.
+2. **Grype** — `anchore/scan-action` scans that SBOM and writes
+   `grype-results.sarif`.
+3. **Trivy** — `trivy-action` in `fs` mode on the checkout, scanners
+   `vuln,secret,misconfig`, writes `trivy-results.sarif`. It runs whether or
+   not Grype did.
+4. **Upload** — each SARIF goes to Code Scanning with
+   `github/codeql-action/upload-sarif`, categories `grype-engine` and
+   `trivy-engine`, only if the file exists. Both files are also kept as the
+   `sarif-results` artifact. On a pull request from a fork the token is
+   read-only, so the upload is skipped and the artifact is the only output;
+   `pull_request_target` is deliberately not used to get around that.
+5. **Report** — scheduled runs only (Mondays 04:00 UTC), a separate `report`
+   job holding `issues: write`. It counts High/Critical results in both SARIF
+   files and, only if there are any, opens or updates the one open
+   `security`-labelled issue (found by a hidden marker in its body, never
+   duplicated). It does nothing when there are no findings and never closes
+   the issue; that stays manual.
+
+`id-token: write` is granted on the `scan` job only. Nothing uses it yet; it is
+there for attesting the SBOM with Cosign, which is a follow-up.
+
+Who owns what, so nothing is scanned twice for the same purpose:
+
+| Check | Where | Scope | Role |
+|---|---|---|---|
+| Trivy, image | `image.yml` | built `balancr:ci` image, fixable CRITICAL/HIGH | merge gate, unchanged |
+| Trivy `fs`, Grype | `security-scan.yml` | repository and lockfile SBOM, Dockerfile/IaC | reports to Code Scanning |
+| gitleaks | `ci.yml` | full history, `.gitleaks.toml` allowlist | gate for secrets |
+| `npm audit` | `ci.yml` | production dependencies | gate, High and above |
+
+Trivy's `secret` scanner overlaps gitleaks and GitHub's native secret
+scanning, and it does not read `.gitleaks.toml`, so a known placeholder (for
+example in `.env.example`) can show up as a Code Scanning alert. Those are
+dismissed there, not silenced in the workflow. The overlap with `npm audit`
+is intended cross-verification.
+
+The Syft, Grype and Trivy CLI versions are pinned in the workflow and kept
+current by a custom regex manager in `renovate.json`, which reads the
+`# renovate:` comment above each pin.
+
 ## Outside this repo
 
 **Harbor.** The operator's own Harbor instance replicates the published

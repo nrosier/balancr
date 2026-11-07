@@ -72,6 +72,29 @@ retention policy must keep both the `sha256-<hash>` and `sha256-<hash>.sig`
 tags, and the manifests they point to: deleting one makes that image
 unverifiable.
 
+## Vulnerability scanning
+
+Three layers, only one of which blocks a merge.
+
+- **Gate.** `image.yml` scans the built image with Trivy and fails on fixable
+  CRITICAL/HIGH. `ci.yml` runs gitleaks over the full history and
+  `npm audit` on production dependencies.
+- **Reporting.** `security-scan.yml` builds a CycloneDX SBOM with Syft, scans
+  it with Grype, and runs Trivy over the repository for vulnerabilities,
+  secrets and Dockerfile/IaC misconfiguration. Results land in GitHub Code
+  Scanning under the categories `grype-engine` and `trivy-engine`, next to
+  alerts from other tools. It never fails on a finding and is not a gate.
+  It also runs weekly, which catches CVEs disclosed after a merge; a
+  scheduled run with High/Critical findings opens or updates one
+  `security`-labelled issue.
+- **Outside the repo.** Harbor scans the published image on its own, and
+  GitHub native secret scanning with push protection is enabled.
+
+The published image is not scanned by `security-scan.yml`. Token scopes follow
+the split: the job that runs third-party scanners has `security-events: write`
+(and `id-token: write`, reserved for a future SBOM attestation), and only the
+separate reporting job has `issues: write`. See [`ci.md`](ci.md#security-scanyml--push-to-main-pull-request-weekly-manual).
+
 ## Egress
 
 Balancr refuses to connect to a host nobody configured. The allowlist is
