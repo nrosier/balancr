@@ -6,6 +6,18 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.2] — 2026-11-09
+
+Dependency hardening and documentation — no runtime or user-facing application change.
+
+### Security
+
+- **Dev-only `minimatch` override.** `package.json` now overrides `minimatch` to a patched release and the lockfile is regenerated, so the development toolchain no longer resolves the vulnerable copy. The runtime application's own copies of `minimatch` and `glob` were already fixed (#859, #860).
+
+### Changed
+
+- **Docs record the remaining base-image findings.** `docs/security-model.md` notes that the Chainguard base image's bundled npm still carries `glob` 13.0.6 and `minimatch` 10.2.3. These are not fixable from this repository, so the shipped image still contains them until a fixed base image ships; they stay tracked by #859 and #860.
+
 ## [2.7.1] — 2026-11-07
 
 Security-scanning workflow and documentation — no runtime or user-facing application change.
