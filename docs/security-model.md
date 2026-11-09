@@ -90,6 +90,17 @@ Three layers, only one of which blocks a merge.
 - **Outside the repo.** Harbor scans the published image on its own, and
   GitHub native secret scanning with push protection is enabled.
 
+**Known residual: the base image's bundled npm.** The Chainguard `node` runtime
+image ships npm under `/usr/lib/node_modules/npm`, with its own `glob` and
+`minimatch` copies. They are not part of Balancr's lockfile, nothing at runtime
+calls npm (the entrypoint is `node dist/main.js`), and this repo cannot change
+them: the runtime stage has no shell to delete them, and the pinned digest is
+already Chainguard's current `latest`. The fix arrives with a Chainguard rebuild
+that bundles a fixed npm; the Renovate digest bump picks it up. Until then
+Harbor/HarborGate keeps reporting those two MEDIUM advisories (CVE-2026-118764,
+CVE-2026-118773) against the image. The application's own copies are pinned past
+the fixed versions (`overrides` in `package.json` forces `minimatch` 11.0.5).
+
 The published image is not scanned by `security-scan.yml`. Token scopes follow
 the split: the job that runs third-party scanners has `security-events: write`
 (and `id-token: write`, reserved for a future SBOM attestation), and only the
