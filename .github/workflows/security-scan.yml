@@ -78,7 +78,7 @@ jobs:
           output-file: grype-results.sarif
           fail-build: false
           # renovate: datasource=github-releases depName=anchore/grype
-          grype-version: v0.121.2
+          grype-version: v0.121.3
 
       # Trivy: independent of Grype's outcome. fs mode on the checkout; the
       # built image is scanned (and gated) by image.yml.
