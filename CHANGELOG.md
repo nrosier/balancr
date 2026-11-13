@@ -6,6 +6,22 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.3] — 2026-11-13
+
+Database-migration fix for the newer bundled SQLite, a base-image security refresh, and dependency maintenance.
+
+### Fixed
+
+- **Migration 0049 stays correct on SQLite 3.54.** `better-sqlite3` 13.1.1 bundles SQLite 3.54.1, which drops the JSON subtype that migration 0049 (the legacy-mortgage property sweep) relied on. Without a fix, a fresh database running that migration would store the property list as a quoted string instead of a JSON array. The subquery is now wrapped in `json()`, so the output is a JSON array on every SQLite version. Databases that already ran 0049 are unaffected (#874).
+
+### Security
+
+- **Refreshed Node runtime base image.** The Chainguard `node` base-image digests for the build and runtime stages are updated, and the shipped image now carries `nodejs-26` 26.13.1, which fixes CVE-2026-123863 (HIGH) found in 26.13.0. The Node version pin (`.nvmrc`, `engines`, the Alpine Dockerfile) moves to 26.13.1 to match.
+
+### Changed
+
+- **Dependency maintenance.** `better-sqlite3` 13.1.1 (bundles SQLite 3.54.1), `i18next` 27, `react-i18next` 18, `@google/genai` 3, `nodemailer` 10, development dependencies, the Syft and Grype scanner pins, and a lockfile refresh. No intended behaviour change.
+
 ## [2.7.2] — 2026-11-09
 
 Dependency hardening and documentation — no runtime or user-facing application change.

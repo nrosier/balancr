@@ -1041,13 +1041,14 @@ ends.
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.7.2` is the current release. It pins a
-dev-only dependency (`minimatch`) to a patched version and documents the
-remaining scanner findings that come from the base image's bundled npm, with no
-runtime or user-facing application change (see [`CHANGELOG.md`](CHANGELOG.md)
-for details). Existing deployments upgrade in place.
+**Where it is now** — `2.7.3` is the current release. It keeps database
+migration 0049 correct under the SQLite 3.54 bundled with the updated
+`better-sqlite3`, ships a refreshed Node base image that fixes a HIGH-severity
+`nodejs-26` finding, and carries routine dependency updates (see
+[`CHANGELOG.md`](CHANGELOG.md) for details). Existing deployments upgrade in
+place.
 
-`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.2`; a release
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.3`; a release
 candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped
