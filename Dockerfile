@@ -30,7 +30,7 @@
 #
 # amd64 only, matching Dockerfile.alpine's current scope. Dockerfile.alpine
 # is kept as a reference/fallback build; CI no longer builds it.
-FROM cgr.dev/chainguard/node:latest-dev@sha256:4557d31cffa6e74dcede97057b0a26e9c203ea77eac88b28d88592cf98c149db AS deps
+FROM cgr.dev/chainguard/node:latest-dev@sha256:4b1b492b6e1ef2433e14caaf09df940a415a3da5315a1ec5a787defd8464b054 AS deps
 ARG TARGETARCH
 WORKDIR /app
 USER root
@@ -41,7 +41,7 @@ RUN npm ci --omit=dev \
  && node scripts/prune-runtime-deps.mjs node_modules --arch=${TARGETARCH} \
  && npm cache clean --force
 
-FROM cgr.dev/chainguard/node:latest-dev@sha256:4557d31cffa6e74dcede97057b0a26e9c203ea77eac88b28d88592cf98c149db AS build
+FROM cgr.dev/chainguard/node:latest-dev@sha256:4b1b492b6e1ef2433e14caaf09df940a415a3da5315a1ec5a787defd8464b054 AS build
 WORKDIR /app
 USER root
 RUN apk add --no-cache build-base python3
