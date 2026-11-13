@@ -14,11 +14,17 @@
 -- that substitutes `'{}'` for invalid JSON, so it can never throw regardless of
 -- evaluation order — the outer `json_valid` check is kept too, purely so a corrupt
 -- row is skipped rather than rewritten as `{}`.
+--
+-- The subquery is wrapped in `json(...)` because SQLite only treats a value as
+-- JSON in `json_set` when it carries the JSON subtype, and a subtype is not
+-- guaranteed to survive a scalar-subquery boundary. SQLite 3.54 (better-sqlite3
+-- 13.1) drops it, which made the array land as a quoted string. `json()` re-tags
+-- it, so the result is the same on every SQLite version.
 UPDATE `settings`
 SET `value_json` = json_set(
   `settings`.`value_json`,
   '$.properties',
-  (
+  json((
     SELECT json_group_array(
       CASE
         WHEN json_type(`property`.`value`, '$.mortgage') IS NULL THEN `property`.`value`
@@ -35,7 +41,7 @@ SET `value_json` = json_set(
       CASE WHEN json_valid(`settings`.`value_json`) THEN `settings`.`value_json` ELSE '{}' END,
       '$.properties'
     ) AS `property`
-  )
+  ))
 )
 WHERE `key` = 'property.properties'
   AND json_valid(`settings`.`value_json`)
