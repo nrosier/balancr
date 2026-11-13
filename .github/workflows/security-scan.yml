@@ -55,7 +55,7 @@ jobs:
           format: cyclonedx-json
           output-file: sbom.cyclonedx.json
           # renovate: datasource=github-releases depName=anchore/syft
-          syft-version: v1.57.0
+          syft-version: v1.57.1
           upload-artifact: false
 
       - name: Upload SBOM
