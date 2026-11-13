@@ -6,6 +6,19 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.4] — 2026-11-13
+
+Supply-chain check hardening and a Node base-image refresh. The only change that ships to users is the refreshed runtime base image; everything else is maintenance.
+
+### Security
+
+- **Refreshed Node runtime base image.** The Chainguard `node` runtime base-image digest is updated, so the shipped image picks up the latest base layers (#878).
+
+### Changed
+
+- **Stricter `allow-scripts` check.** The check now detects blocked install scripts from the packages actually installed and fails on stale `allowScripts` entries. Stale `better-sqlite3` 13.0.3 / 12.11.1 and `@google/genai` 2.32.0 entries were pruned, and `better-sqlite3` 13.1.1 is denied with a documented reason. Ten tests were added. Build tooling only, no runtime change (#876, #880).
+- **Maintenance.** The Node development/build-stage base-image digest was bumped (not shipped) (#877), along with a lockfile refresh (#879).
+
 ## [2.7.3] — 2026-11-13
 
 Database-migration fix for the newer bundled SQLite, a base-image security refresh, and dependency maintenance.
