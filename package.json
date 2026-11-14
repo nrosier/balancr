@@ -53,7 +53,7 @@
     "i18next": "^27.1.1",
     "ipaddr.js": "^2.5.0",
     "nodemailer": "^10.5.0",
-    "openid-client": "^6.8.9",
+    "openid-client": "^6.9.0",
     "otpauth": "^9.6.0",
     "pdfkit": "^0.20.2",
     "pino": "^10.4.0",
