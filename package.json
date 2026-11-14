@@ -105,11 +105,11 @@
   },
   "allowScripts": {
     "argon2@0.45.2": true,
-    "better-sqlite3@13.1.1": false,
+    "better-sqlite3@13.2.0": false,
     "esbuild@0.28.2": true,
     "fsevents@2.3.3": true
   },
   "allowScriptsDenyReasons": {
-    "better-sqlite3@13.1.1": "Ships prebuilds/<platform>-<arch>.node for linux, linuxmusl, darwin and win32 on x64 and arm64, and lib/binding.js loads those directly; its binding.gyp compiles nothing when a prebuild exists, so the implicit `node-gyp rebuild` npm blocks is a no-op (#876)."
+    "better-sqlite3@13.2.0": "Ships prebuilds/<platform>-<arch>.node for linux, linuxmusl, darwin and win32 on x64 and arm64, and lib/binding.js loads those directly; its binding.gyp compiles nothing when a prebuild exists, so the implicit `node-gyp rebuild` npm blocks is a no-op (#876)."
   }
 }
