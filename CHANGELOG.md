@@ -6,6 +6,16 @@ scheme in [README](README.md#versioning) — a minor lands when its milestone is
 complete, patches carry the work in between, and 1.0.0 ships when testing says so
 rather than when the feature list ends.
 
+## [2.7.5] — 2026-11-14
+
+Dependency updates only. No new features and no behaviour changes.
+
+### Changed
+
+- **Dependency updates.** `better-sqlite3` is bumped to 13.2.0, with smaller updates to `@fastify/static` (10.1.11) and `openid-client` (6.9.0), and refreshed transitive dependencies from lockfile maintenance (#881, #882, #886, #887, #888).
+- **Refreshed Node base images.** The Chainguard `node` runtime and build-stage image digests are updated, so the shipped image picks up the latest base layers (#883, #884).
+- **Maintenance.** The `allowScripts` entry for `better-sqlite3` is re-keyed to 13.2.0; the deny reason still holds because the package ships prebuilt binaries (#886). Development dependencies were also updated (#885). Neither is shipped.
+
 ## [2.7.4] — 2026-11-13
 
 Supply-chain check hardening and a Node base-image refresh. The only change that ships to users is the refreshed runtime base image; everything else is maintenance.

@@ -1041,13 +1041,13 @@ ends.
 
 ✅ complete · 🔄 in progress, shipping under the patch series shown · ⬜ not started
 
-**Where it is now** — `2.7.4` is the current release. It refreshes the Node
-runtime base image and tightens the install-script (`allow-scripts`) supply-chain
-check used in CI; neither changes application behaviour (see
+**Where it is now** — `2.7.5` is the current release. It carries dependency
+updates only (`better-sqlite3` 13.2.0, refreshed transitive dependencies and
+Node base images) with no change to application behaviour (see
 [`CHANGELOG.md`](CHANGELOG.md) for details). Existing deployments upgrade in
 place.
 
-`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.4`; a release
+`docker pull ghcr.io/nrosier/balancr:latest` now resolves to `2.7.5`; a release
 candidate is published under its own tag only, same as before.
 
 Progress is tracked as [issues](https://github.com/nrosier/balancr/issues), grouped
